@@ -19,7 +19,7 @@ RECIPIENT_EMAIL = ['kris.bredemeier@holbertonschool.com']
 r = praw.Reddit(user_agent= USERAGENT)
 r.login(USERNAME, PASSWORD)
 
-words_to_match = ['getting better at python programming']
+words_to_match = ['sitting at harmonic ']
 cache = []
 
 def run_bot():
@@ -33,23 +33,31 @@ def run_bot():
         isMatch = any(string in comment_text for string in words_to_match)
         if comment.id not in cache and isMatch:
             print("Match found! comment ID: " + comment.id)
-            comment.reply(REPLY)
+
+            # comment.reply(REPLY)
+            print("email sent")
+            send_email()
             print("Reply successful!")
             cache.append(comment.id)
     print("Comments loop finished, time to sleep")
 
 def send_email():
-    content = 'test' #url of reddit post that has our keyword in it
+    submissions = r.get_subreddit('test').get_top(limit= MAXPOSTS)
+    for item in submissions:
+        print item.url
+    #content = 'test' #url of reddit post that has our keyword in it
     mail = smtplib.SMTP('smtp.gmail.com', 587)
     mail.ehlo()
     mail.starttls()
     mail.login(SENDER_EMAIL, PASSWORD)
-    mail.sendmail(SENDER_EMAIL, RECIPIENT_EMAIL, content)
+    mail.sendmail(SENDER_EMAIL, RECIPIENT_EMAIL, submissions)
     mail.close
+
+# def get_url():
+
 
 while True:
     run_bot()
-    send_email()
     time.sleep(10)
 
 # KEYWORDS ['CS']
