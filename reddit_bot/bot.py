@@ -1,6 +1,7 @@
 import praw
 import time
 import smtplib
+import pprint
 
 #import creds
 USERAGENT = 'holberton keyword search by /u/school_bot'
@@ -21,6 +22,7 @@ r.login(USERNAME, PASSWORD)
 words_to_match = ['sitting at harmonic ']
 id_cache = []
 url_cache = []
+pp = pprint.PrettyPrinter(depth=6)
 
 def run_bot():
     print("Grabbing subreddit...")
@@ -39,6 +41,8 @@ def run_bot():
                     pass
             print("Match found! comment ID: " + comment.id)
             print("This is the submission url: " + submission.url)
+            print("Below are the dirs of submissions =>")
+            pp.pprint(dir(submissions))
             # comment.reply(REPLY)
             print("email sent")
             send_email()
