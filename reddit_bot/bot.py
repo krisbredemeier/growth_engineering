@@ -27,6 +27,7 @@ def run_bot():
     subreddit = r.get_subreddit(SUBREDDIT_TITLE)
     print("Grabbing comments...")
     comments = subreddit.get_comments(limit= MAXPOSTS)
+    print("Grabbing submissions...")
     submissions = subreddit.get_top(limit= MAXPOSTS)
     # message = subreddit.get_message(limit= MAXPOSTS)
     for comment in comments:
@@ -40,7 +41,7 @@ def run_bot():
             print("This is the submission url: " + submission.url)
             # comment.reply(REPLY)
             print("email sent")
-            #send_email()
+            send_email()
             # print("Reply successful!")
             id_cache.append(comment.id)
             url_cache.append(submission.url)
@@ -53,13 +54,16 @@ def send_email():
     # for item in submissions:
     #     pass
         # print item.url
-    content = "the url is -" #url of reddit post that has our keyword in it
+    content = "Is this going to be forever?" #url of reddit post that has our keyword in it
+    # + "".join([str(i) for i in url_cache])
+    print("Content = " + content)
     mail = smtplib.SMTP('smtp.gmail.com', 587)
     mail.ehlo()
     mail.starttls()
     mail.login(SENDER_EMAIL, PASSWORD)
     mail.sendmail(SENDER_EMAIL, RECIPIENT_EMAIL, content)
     mail.close
+
 
 # def get_url():
 
