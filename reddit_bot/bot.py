@@ -44,13 +44,14 @@ def run_bot():
 def send_email():
     submissions = r.get_subreddit('test').get_top(limit= MAXPOSTS)
     for item in submissions:
-        print item.url
-    #content = 'test' #url of reddit post that has our keyword in it
+        pass
+        # print item.url
+    content = item.url  #url of reddit post that has our keyword in it
     mail = smtplib.SMTP('smtp.gmail.com', 587)
     mail.ehlo()
     mail.starttls()
     mail.login(SENDER_EMAIL, PASSWORD)
-    mail.sendmail(SENDER_EMAIL, RECIPIENT_EMAIL, submissions)
+    mail.sendmail(SENDER_EMAIL, RECIPIENT_EMAIL, content)
     mail.close
 
 # def get_url():
