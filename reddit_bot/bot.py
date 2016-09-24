@@ -19,7 +19,8 @@ r = praw.Reddit(user_agent= USERAGENT)
 r.login(USERNAME, PASSWORD)
 
 words_to_match = ['sitting at harmonic ']
-cache = []
+id_cache = []
+url_cache = []
 
 def run_bot():
     print("Grabbing subreddit...")
@@ -31,18 +32,20 @@ def run_bot():
     for comment in comments:
         comment_text = comment.body.lower()
         isMatch = any(string in comment_text for string in words_to_match)
-        if comment.id not in cache and isMatch:
+        if comment.id not in id_cache and isMatch:
             for submission in submissions:
-                if submission.url not in cache and isMatch:
+                if submission.url not in url_cache and isMatch:
                     pass
-            print("Match found! comment ID: " + comment.id + submission.url)
+            print("Match found! comment ID: " + comment.id)
+            print("This is the submission url: " + submission.url)
             # comment.reply(REPLY)
             print("email sent")
             #send_email()
-            print("Reply successful!")
-            cache.append(comment.id)
-            cache.append(submission.url)
-            # print cache
+            # print("Reply successful!")
+            id_cache.append(comment.id)
+            url_cache.append(submission.url)
+            # print id_cache
+            # print url_cache
     print("Comments loop finished, time to sleep")
 
 def send_email():
