@@ -32,16 +32,17 @@ def run_bot():
         comment_text = comment.body.lower()
         isMatch = any(string in comment_text for string in words_to_match)
         if comment.id not in cache and isMatch:
-            print("Match found! comment ID: " + comment.id)
             for submission in submissions:
                 if submission.url not in cache and isMatch:
-                    print submission.url
+                    pass
+            print("Match found! comment ID: " + comment.id + submission.url)
             # comment.reply(REPLY)
             print("email sent")
             #send_email()
             print("Reply successful!")
             cache.append(comment.id)
             cache.append(submission.url)
+            # print cache
     print("Comments loop finished, time to sleep")
 
 def send_email():
